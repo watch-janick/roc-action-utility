@@ -47,7 +47,7 @@ const create = !!opt.options.create;
 const force = !!opt.options.force;
 const version = opt.options.version ? opt.options.version : null;
 
-if (name.charAt(0).isLowerCase()) {
+if (name && name.charAt(0).isLowerCase()) {
     name = name.toCapitalize();
 }
 
@@ -145,5 +145,5 @@ if (name) {
 }
 
 if (!name) {
-    console.log('ActionGenerator needs at least the --name (-n) argument, -h for more informations.');
+    console.log('roc-action-utility needs at least the --name (-n) argument, -h for more informations.');
 }
