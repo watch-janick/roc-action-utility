@@ -48,7 +48,7 @@ describe('${ACTION_NAME_CAMELIZED}', () => {
     expect(action).toEqual(expectedAction)
   })
 
-  it('should create an async action to handle fetch ${ACTION_NAME_UPPERCASE}', (done) => {
+  it('should create an async action to handle fetch ${ACTION_NAME_UPPERCASE} success', (done) => {
     // Given a request to fetch ${ACTION_NAME_UPPERCASE} ...
     const store = mockStore()
     const ${ACTION_NAME_CAMELIZED} = {}
@@ -72,6 +72,35 @@ describe('${ACTION_NAME_CAMELIZED}', () => {
 
     store.dispatch(action)
       .then(() => { // return of async actions
+        expect(store.getActions()).toEqual(expectedActions)
+        done()
+      })
+  })
+
+  it('should create an async action to handle fetch ${ACTION_NAME_UPPERCASE} error', (done) => {
+    // Given a request to fetch TEST_MESSAGE ...
+    const store = mockStore()
+    const error = { msg: 'an error occurred' }
+    spyOn(services${ACTION_NAME_CAPITALIZED}, 'fetch${ACTION_NAME_CAPITALIZED}')
+      .and
+      .returnValue(Promise.reject(error))
+
+    // ... When I create an async resolved fetch TEST_MESSAGE action
+    const action = ${ACTION_NAME_CAMELIZED}Actions.fetch${ACTION_NAME_CAPITALIZED}()
+
+    // Then it should match the expected actions
+    const expectedActions = [
+      {
+        type: ${ACTION_NAME_CAMELIZED}Actions.FETCH_${ACTION_NAME_UPPERCASE}_REQUEST,
+      },
+      {
+        type: ${ACTION_NAME_CAMELIZED}Actions.FETCH_${ACTION_NAME_UPPERCASE}_FAILURE,
+        error: error,
+      },
+    ]
+
+    store.dispatch(action)
+      .catch(() => { // return of async actions
         expect(store.getActions()).toEqual(expectedActions)
         done()
       })
