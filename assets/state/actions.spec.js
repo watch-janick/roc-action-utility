@@ -52,7 +52,9 @@ describe('${ACTION_NAME_CAMELIZED}', () => {
     // Given a request to fetch ${ACTION_NAME_UPPERCASE} ...
     const store = mockStore()
     const ${ACTION_NAME_CAMELIZED} = {}
-    spyOn(services${ACTION_NAME_CAPITALIZED}, 'fetch${ACTION_NAME_CAPITALIZED}').and.returnValue(Promise.resolve(messages))
+    spyOn(services${ACTION_NAME_CAPITALIZED}, 'fetch${ACTION_NAME_CAPITALIZED}')
+      .and
+      .returnValue(Promise.resolve(${ACTION_NAME_CAMELIZED}))
 
     // ... When I create an async resolved fetch ${ACTION_NAME_UPPERCASE} action
     const action = ${ACTION_NAME_CAMELIZED}Actions.fetch${ACTION_NAME_CAPITALIZED}()
