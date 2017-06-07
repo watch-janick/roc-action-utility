@@ -6,7 +6,7 @@ import { services${ACTION_NAME_CAPITALIZED} } from '$src/services/${ACTION_NAME_
 
 describe('${ACTION_IMPORT_NAME}', () => {
   it('should create an action to fetch ${ACTION_NAME_UPPERCASE}', () => {
-    // When I create fetch pending messages request action
+    // When I create fetch ${ACTION_NAME_UPPERCASE} request action
     const action = ${ACTION_IMPORT_NAME}.fetch${ACTION_NAME_CAPITALIZED}Request()
 
     // Then it should match the expected action
@@ -20,7 +20,7 @@ describe('${ACTION_IMPORT_NAME}', () => {
     // Given some data
     const data = {}
 
-    // ... When I create fetch user success action
+    // ... When I create fetch ${ACTION_NAME_UPPERCASE} action
     const action = ${ACTION_IMPORT_NAME}.fetch${ACTION_NAME_CAPITALIZED}Success(data)
 
     // Then it should match the expected action
@@ -35,7 +35,7 @@ describe('${ACTION_IMPORT_NAME}', () => {
     // Given an error object ...
     const error = { msg: 'an error occurred' }
 
-    // ... When I create fetch pending messages failure action
+    // ... When I create fetch ${ACTION_NAME_UPPERCASE} failure action
     const action = ${ACTION_IMPORT_NAME}.fetch${ACTION_NAME_CAPITALIZED}Failure(error)
 
     // Then it should match the expected action

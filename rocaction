@@ -9,141 +9,218 @@ const path = require('path');
  * V1 LBC Actions generator
  */
 const options = [
-    ['n', 'name=ARG', 'generate a complete fetch action. Must be in capitalized format, ex: LeBonCoin'],
-    ['c', 'create', 'create files in the current directory'],
-    ['f', 'force', 'allow overriding of state directory & files'],
-    ['h', 'help', 'display this help'],
-    ['v', 'version', 'show version']
+  ['s', 'state=ARG', 'generate a complete state fetch structure. Must be in capitalized format, ex: LeBonCoin'],
+  ['a', 'action=ARG', 'generate a single action. Must be in capitalized format, ex: LeBonCoin'],
+  ['c', 'create', 'create files in the current directory'],
+  ['f', 'force', 'allow overriding of state directory & files'],
+  ['h', 'help', 'display this help'],
+  ['v', 'version', 'show version']
 ];
 
 const opt = getopt
-    .create(options)
-    .bindHelp()
-    .parseSystem()
+  .create(options)
+  .bindHelp()
+  .parseSystem()
 ;
 
 String.prototype.toCapitalize = function () {
-    return this.charAt(0).toUpperCase() + this.slice(1);
+  return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
 String.prototype.toCamelCase = function () {
-    return this.charAt(0).toLowerCase() + this.slice(1);
+  return this.charAt(0).toLowerCase() + this.slice(1);
 }
 
 String.prototype.toConst = function () {
-    return (this.charAt(0) + this.slice(1).replace(/([A-Z])/g, '_$1')).toUpperCase();
+  return (this.charAt(0) + this.slice(1).replace(/([A-Z])/g, '_$1')).toUpperCase();
 }
 
 String.prototype.isLowerCase = function () {
-    return this == this.toLowerCase();
+  return this == this.toLowerCase();
 }
 
 String.prototype.isUpperCase = function () {
-    return this == this.toUpperCase();
+  return this == this.toUpperCase();
 }
 
-let name = opt.options.name ? opt.options.name : null;
+let state = opt.options.state ? opt.options.state : null;
+let action = opt.options.action ? opt.options.action : null;
 const create = !!opt.options.create;
 const force = !!opt.options.force;
 const version = opt.options.version ? opt.options.version : null;
 
-if (name && name.charAt(0).isLowerCase()) {
-    name = name.toCapitalize();
+// capitalize if not
+if (state && state.charAt(0).isLowerCase()) {
+  state = state.toCapitalize();
+}
+
+// capitalize if not
+if (action && action.charAt(0).isLowerCase()) {
+  action = action.toCapitalize();
+}
+
+if (!state && !action) {
+  console.log('roc-action-utility needs at least either the --state (-s) argument or the --action (-a) argument, -h for more informations.');
+  process.exit(1);
+} else if (state && action) {
+  console.log(`You can't mix --state and --action.`);
+  process.exit(1);
 }
 
 if (version) {
-    return (console.log('1.0.0'));
+  return (console.log('1.1.1'));
 }
 
-function puts (error, stdout, stderr) {
-    if (stderr) {
-        console.log(stderr);
+if (action) {
+  createAction(action);
+}
+
+if (state) {
+  createState(state, create, force);
+}
+
+function createAction (name) {
+  const templateDirectory = path.join(__dirname, 'assets', 'action');
+  const files = [
+    {
+      target: 'index.js',
+      type: 'core'
+    },
+    {
+      target: 'actions.js',
+      type: 'core'
+    },
+    {
+      target: 'index.spec.js',
+      type: 'tests'
+    },
+    {
+      target: 'actions.spec.js',
+      type: 'tests'
     }
+  ];
+  let loopCount = files.length;
+
+  const actionNameCamelizedRegexp = /\$\{ACTION_NAME_CAMELIZED\}/g;
+  const actionNameCamelized = name.toCamelCase();
+
+  const actionNameUppercaseRegexp = /\$\{ACTION_NAME_UPPERCASE\}/g;
+  const actionNameUppercase = name.toConst();
+
+  const actionImportNameRegexp = /\$\{ACTION_IMPORT_NAME\}/g;
+  const actionImportName = name;
+
+  const actionNameCapitalizedRegexp = /\$\{ACTION_NAME_CAPITALIZED\}/g;
+  const actionNameCapitalized = name;
+
+  const targetDirectory = path.join(process.cwd(), actionNameCamelized);
+  const testsDirectory = path.join(targetDirectory, '__tests__');
+
+  for (let file of files) {
+    fs.readFile(path.join(templateDirectory, file.target), 'utf8', function (err, template) {
+      if (err) {
+        console.log(err);
+        process.exit(1);
+      }
+
+      const output = template
+        .replace(actionNameCamelizedRegexp, actionNameCamelized)
+        .replace(actionNameUppercaseRegexp, actionNameUppercase)
+        .replace(actionImportNameRegexp, actionImportName)
+        .replace(actionNameCapitalizedRegexp, actionNameCapitalized)
+      ;
+
+      const targetFileDirectory = file.type === 'core' ? targetDirectory : testsDirectory;
+      const filePath = path.join(targetFileDirectory, file.target);
+
+      console.log(`You can now copy this output code into '${filePath}' : \n${output}`);
+
+      if (!(--loopCount)) {
+        console.log(`Don't forget to add your new reducer in reducers.js !`);
+      }
+    });
+  }
 }
 
-if (name) {
-    const templateDirectory = path.join(__dirname, 'assets');
-    const files = [
-        {
-            target: 'index.js',
-            type: 'core'
-        },
-        {
-            target: 'actions.js',
-            type: 'core'
-        },
-        {
-            target: 'index.spec.js',
-            type: 'tests'
-        },
-        {
-            target: 'actions.spec.js',
-            type: 'tests'
+function createState (name, create, force) {
+  const templateDirectory = path.join(__dirname, 'assets', 'state');
+  const files = [
+    {
+      target: 'index.js',
+      type: 'core'
+    },
+    {
+      target: 'actions.js',
+      type: 'core'
+    },
+    {
+      target: 'index.spec.js',
+      type: 'tests'
+    },
+    {
+      target: 'actions.spec.js',
+      type: 'tests'
+    }
+  ];
+  let loopCount = files.length;
+
+  const actionNameCamelizedRegexp = /\$\{ACTION_NAME_CAMELIZED\}/g;
+  const actionNameCamelized = name.toCamelCase();
+
+  const actionNameUppercaseRegexp = /\$\{ACTION_NAME_UPPERCASE\}/g;
+  const actionNameUppercase = name.toConst();
+
+  const actionImportNameRegexp = /\$\{ACTION_IMPORT_NAME\}/g;
+  const actionImportName = name;
+
+  const actionNameCapitalizedRegexp = /\$\{ACTION_NAME_CAPITALIZED\}/g;
+  const actionNameCapitalized = name;
+
+  const targetDirectory = path.join(process.cwd(), actionNameCamelized);
+  
+  // needs to create the state directory
+  if (create && !fs.existsSync(targetDirectory)) {
+    fs.mkdirSync(targetDirectory);
+  }
+
+  const testsDirectory = path.join(targetDirectory, '__tests__');
+
+  // needs to create the tests directory
+  if (create && !fs.existsSync(testsDirectory)) {
+    fs.mkdirSync(testsDirectory);
+  }
+
+  for (let file of files) {
+    fs.readFile(path.join(templateDirectory, file.target), 'utf8', function (err, template) {
+      if (err) {
+        console.log(err);
+        process.exit(1);
+      }
+
+      const output = template
+        .replace(actionNameCamelizedRegexp, actionNameCamelized)
+        .replace(actionNameUppercaseRegexp, actionNameUppercase)
+        .replace(actionImportNameRegexp, actionImportName)
+        .replace(actionNameCapitalizedRegexp, actionNameCapitalized)
+      ;
+
+      const targetFileDirectory = file.type === 'core' ? targetDirectory : testsDirectory;
+      const filePath = path.join(targetFileDirectory, file.target);
+
+      if (create) {
+        if (!fs.existsSync(filePath) || force) {
+          fs.writeFileSync(filePath, output);
+        } else {
+          console.log(`The file '${filePath}' already exists, use --force to override`);
+          process.exit(1);
         }
-    ];
-    let loopCount = files.length;
+      } else {
+        console.log(`You can now copy this output code into '${filePath}' : \n${output}`);
+      }
 
-    const actionNameCamelizedRegexp = /\$\{ACTION_NAME_CAMELIZED\}/g;
-    const actionNameCamelized = name.toCamelCase();
-
-    const actionNameUppercaseRegexp = /\$\{ACTION_NAME_UPPERCASE\}/g;
-    const actionNameUppercase = name.toConst();
-
-    const actionImportNameRegexp = /\$\{ACTION_IMPORT_NAME\}/g;
-    const actionImportName = name;
-
-    const actionNameCapitalizedRegexp = /\$\{ACTION_NAME_CAPITALIZED\}/g;
-    const actionNameCapitalized = name;
-
-    const targetDirectory = path.join(process.cwd(), actionNameCamelized);
-    
-    // needs to create the state directory
-    if (create && !fs.existsSync(targetDirectory)) {
-        fs.mkdirSync(targetDirectory);
-    }
-
-    const testsDirectory = path.join(targetDirectory, '__tests__');
-
-    // needs to create the tests directory
-    if (create && !fs.existsSync(testsDirectory)) {
-        fs.mkdirSync(testsDirectory);
-    }
-
-    for (let file of files) {
-        fs.readFile(path.join(templateDirectory, file.target), 'utf8', function (err, template) {
-            if (err) {
-                console.log(err);
-                process.exit(1);
-            }
-
-            const output = template
-                .replace(actionNameCamelizedRegexp, actionNameCamelized)
-                .replace(actionNameUppercaseRegexp, actionNameUppercase)
-                .replace(actionImportNameRegexp, actionImportName)
-                .replace(actionNameCapitalizedRegexp, actionNameCapitalized)
-            ;
-
-            const targetFileDirectory = file.type === 'core' ? targetDirectory : testsDirectory;
-            const filePath = path.join(targetFileDirectory, file.target);
-
-            if (create) {
-                if (!fs.existsSync(filePath) || force) {
-                    fs.writeFileSync(filePath, output);
-                } else {
-                    console.log(`The file '${filePath}' already exists, use --force to override`);
-                    process.exit(1);
-                }
-            } else {
-                console.log(`You can now copy this output code into '${filePath}' : \n${output}`);
-            }
-
-            if (!(--loopCount)) {
-                console.log(`Don't forget to add your new reducer in reducers.js !`);
-            }
-        });
-    }
-}
-
-if (!name) {
-    console.log('roc-action-utility needs at least the --name (-n) argument, -h for more informations.');
+      if (!(--loopCount)) {
+        console.log(`Don't forget to add your new reducer in reducers.js !`);
+      }
+    });
+  }
 }
