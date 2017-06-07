@@ -83,4 +83,4 @@ describe('${ACTION_NAME_CAPITALIZED} reducer', () => {
       error,
     })
   })
-}
+})

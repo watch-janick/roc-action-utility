@@ -4,6 +4,8 @@ import thunk from 'redux-thunk'
 import { ${ACTION_NAME_CAMELIZED}Actions } from '../actions'
 import { services${ACTION_NAME_CAPITALIZED} } from '$src/services/${ACTION_NAME_CAMELIZED}'
 
+const mockStore = configureMockStore([ thunk ])
+
 describe('${ACTION_NAME_CAMELIZED}', () => {
   it('should create an action to fetch ${ACTION_NAME_UPPERCASE}', () => {
     // When I create fetch ${ACTION_NAME_UPPERCASE} request action
@@ -18,15 +20,15 @@ describe('${ACTION_NAME_CAMELIZED}', () => {
 
   it('should create an action to handle fetch ${ACTION_NAME_UPPERCASE} success', () => {
     // Given some data
-    const data = {}
+    const ${ACTION_NAME_CAMELIZED} = {}
 
     // ... When I create fetch ${ACTION_NAME_UPPERCASE} action
-    const action = ${ACTION_NAME_CAMELIZED}Actions.fetch${ACTION_NAME_CAPITALIZED}Success(data)
+    const action = ${ACTION_NAME_CAMELIZED}Actions.fetch${ACTION_NAME_CAPITALIZED}Success(${ACTION_NAME_CAMELIZED})
 
     // Then it should match the expected action
     const expectedAction = {
       type: ${ACTION_NAME_CAMELIZED}Actions.FETCH_${ACTION_NAME_UPPERCASE}_SUCCESS,
-      messages,
+      ${ACTION_NAME_CAMELIZED},
     }
     expect(action).toEqual(expectedAction)
   })
@@ -49,7 +51,7 @@ describe('${ACTION_NAME_CAMELIZED}', () => {
   it('should create an async action to handle fetch ${ACTION_NAME_UPPERCASE}', (done) => {
     // Given a request to fetch ${ACTION_NAME_UPPERCASE} ...
     const store = mockStore()
-    const data = {}
+    const ${ACTION_NAME_CAMELIZED} = {}
     spyOn(services${ACTION_NAME_CAPITALIZED}, 'fetch${ACTION_NAME_CAPITALIZED}').and.returnValue(Promise.resolve(messages))
 
     // ... When I create an async resolved fetch ${ACTION_NAME_UPPERCASE} action
@@ -72,4 +74,4 @@ describe('${ACTION_NAME_CAMELIZED}', () => {
         done()
       })
   })
-}
+})
