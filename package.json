@@ -1,6 +1,6 @@
 {
   "name": "roc-action-utility",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Action generator for RoC based projects",
   "main": "rocaction",
   "bin": {

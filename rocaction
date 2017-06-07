@@ -42,7 +42,7 @@ String.prototype.isUpperCase = function () {
     return this == this.toUpperCase();
 }
 
-const name = opt.options.name ? opt.options.name : null;
+let name = opt.options.name ? opt.options.name : null;
 const create = !!opt.options.create;
 const force = !!opt.options.force;
 const version = opt.options.version ? opt.options.version : null;
