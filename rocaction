@@ -60,7 +60,7 @@ if (action && action.charAt(0).isLowerCase()) {
 }
 
 if (version) {
-  console.log('1.1.4');
+  console.log('1.1.5');
   process.exit(0);
 } else if (!state && !action) {
   console.log('roc-action-utility needs at least either the --state (-s) argument or the --action (-a) argument, -h for more informations.');
