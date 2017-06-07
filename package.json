@@ -1,10 +1,9 @@
 {
-  "name": "roc-utility",
+  "name": "roc-action-utility",
   "version": "1.0.0",
   "description": "Action generator for RoC based projects",
-  "main": "create-actions.js",
+  "main": "index.js",
   "scripts": {
-    "action": "node create-actions.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Janick DELOT <janickdelot@gmail.com>",
