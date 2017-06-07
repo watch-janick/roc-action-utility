@@ -2,7 +2,11 @@
   "name": "roc-action-utility",
   "version": "1.0.0",
   "description": "Action generator for RoC based projects",
-  "main": "index.js",
+  "main": "rocaction",
+  "bin": {
+    "rocaction": "rocaction"
+  },
+  "preferGlobal": "true",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
