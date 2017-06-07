@@ -60,7 +60,7 @@ if (action && action.charAt(0).isLowerCase()) {
 }
 
 if (version) {
-  console.log('1.1.2');
+  console.log('1.1.4');
   process.exit(0);
 } else if (!state && !action) {
   console.log('roc-action-utility needs at least either the --state (-s) argument or the --action (-a) argument, -h for more informations.');
@@ -106,9 +106,6 @@ function createAction (name) {
   const actionNameUppercaseRegexp = /\$\{ACTION_NAME_UPPERCASE\}/g;
   const actionNameUppercase = name.toConst();
 
-  const actionImportNameRegexp = /\$\{ACTION_IMPORT_NAME\}/g;
-  const actionImportName = name;
-
   const actionNameCapitalizedRegexp = /\$\{ACTION_NAME_CAPITALIZED\}/g;
   const actionNameCapitalized = name;
 
@@ -125,7 +122,6 @@ function createAction (name) {
       const output = template
         .replace(actionNameCamelizedRegexp, actionNameCamelized)
         .replace(actionNameUppercaseRegexp, actionNameUppercase)
-        .replace(actionImportNameRegexp, actionImportName)
         .replace(actionNameCapitalizedRegexp, actionNameCapitalized)
       ;
 
@@ -169,9 +165,6 @@ function createState (name, create, force) {
   const actionNameUppercaseRegexp = /\$\{ACTION_NAME_UPPERCASE\}/g;
   const actionNameUppercase = name.toConst();
 
-  const actionImportNameRegexp = /\$\{ACTION_IMPORT_NAME\}/g;
-  const actionImportName = name;
-
   const actionNameCapitalizedRegexp = /\$\{ACTION_NAME_CAPITALIZED\}/g;
   const actionNameCapitalized = name;
 
@@ -199,7 +192,6 @@ function createState (name, create, force) {
       const output = template
         .replace(actionNameCamelizedRegexp, actionNameCamelized)
         .replace(actionNameUppercaseRegexp, actionNameUppercase)
-        .replace(actionImportNameRegexp, actionImportName)
         .replace(actionNameCapitalizedRegexp, actionNameCapitalized)
       ;
 

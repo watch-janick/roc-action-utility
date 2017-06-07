@@ -4,14 +4,14 @@ import thunk from 'redux-thunk'
 import { ${ACTION_NAME_CAMELIZED}Actions } from '../actions'
 import { services${ACTION_NAME_CAPITALIZED} } from '$src/services/${ACTION_NAME_CAMELIZED}'
 
-describe('${ACTION_IMPORT_NAME}', () => {
+describe('${ACTION_NAME_CAMELIZED}', () => {
   it('should create an action to fetch ${ACTION_NAME_UPPERCASE}', () => {
     // When I create fetch ${ACTION_NAME_UPPERCASE} request action
-    const action = ${ACTION_IMPORT_NAME}.fetch${ACTION_NAME_CAPITALIZED}Request()
+    const action = ${ACTION_NAME_CAMELIZED}Actions.fetch${ACTION_NAME_CAPITALIZED}Request()
 
     // Then it should match the expected action
     const expectedAction = {
-      type: ${ACTION_IMPORT_NAME}.FETCH_${ACTION_NAME_UPPERCASE}_REQUEST,
+      type: ${ACTION_NAME_CAMELIZED}Actions.FETCH_${ACTION_NAME_UPPERCASE}_REQUEST,
     }
     expect(action).toEqual(expectedAction)
   })
@@ -21,11 +21,11 @@ describe('${ACTION_IMPORT_NAME}', () => {
     const data = {}
 
     // ... When I create fetch ${ACTION_NAME_UPPERCASE} action
-    const action = ${ACTION_IMPORT_NAME}.fetch${ACTION_NAME_CAPITALIZED}Success(data)
+    const action = ${ACTION_NAME_CAMELIZED}Actions.fetch${ACTION_NAME_CAPITALIZED}Success(data)
 
     // Then it should match the expected action
     const expectedAction = {
-      type: ${ACTION_IMPORT_NAME}.FETCH_${ACTION_NAME_UPPERCASE}_SUCCESS,
+      type: ${ACTION_NAME_CAMELIZED}Actions.FETCH_${ACTION_NAME_UPPERCASE}_SUCCESS,
       messages,
     }
     expect(action).toEqual(expectedAction)
@@ -36,11 +36,11 @@ describe('${ACTION_IMPORT_NAME}', () => {
     const error = { msg: 'an error occurred' }
 
     // ... When I create fetch ${ACTION_NAME_UPPERCASE} failure action
-    const action = ${ACTION_IMPORT_NAME}.fetch${ACTION_NAME_CAPITALIZED}Failure(error)
+    const action = ${ACTION_NAME_CAMELIZED}Actions.fetch${ACTION_NAME_CAPITALIZED}Failure(error)
 
     // Then it should match the expected action
     const expectedAction = {
-      type: ${ACTION_IMPORT_NAME}.FETCH_${ACTION_NAME_UPPERCASE}_FAILURE,
+      type: ${ACTION_NAME_CAMELIZED}Actions.FETCH_${ACTION_NAME_UPPERCASE}_FAILURE,
       error,
     }
     expect(action).toEqual(expectedAction)

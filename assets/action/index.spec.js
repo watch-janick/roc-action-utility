@@ -7,7 +7,7 @@
     // ... When the reducer is called with the ${ACTION_NAME_UPPERCASE} action...
     const result = reducer(
       state,
-      ${ACTION_IMPORT_NAME}.${ACTION_NAME_CAMELIZED}(),
+      ${ACTION_NAME_CAMELIZED}Actions.${ACTION_NAME_CAMELIZED}(),
     )
 
     // Then the reduced state should equal the expected state.

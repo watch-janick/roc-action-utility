@@ -1,4 +1,4 @@
-case ${ACTION_IMPORT_NAME}.${ACTION_NAME_UPPERCASE}:
+case ${ACTION_NAME_CAMELIZED}Actions.${ACTION_NAME_UPPERCASE}:
   return {
     ...state,
   }

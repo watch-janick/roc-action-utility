@@ -28,7 +28,7 @@ describe('${ACTION_NAME_CAPITALIZED} reducer', () => {
     // ... When the reducer is called with the FETCH_${ACTION_NAME_UPPERCASE}_REQUEST action...
     const result = reducer(
       state,
-      ${ACTION_IMPORT_NAME}.fetch${ACTION_NAME_CAPITALIZED}Request(),
+      ${ACTION_NAME_CAMELIZED}Actions.fetch${ACTION_NAME_CAPITALIZED}Request(),
     )
 
     // Then the reduced state should equal the expected state.
@@ -51,7 +51,7 @@ describe('${ACTION_NAME_CAPITALIZED} reducer', () => {
     // ... When the reducer is called with the FETCH_${ACTION_NAME_UPPERCASE}_SUCCESS action...
     const result = reducer(
       state,
-      ${ACTION_IMPORT_NAME}.fetch${ACTION_NAME_CAPITALIZED}Success(${ACTION_NAME_CAMELIZED}),
+      ${ACTION_NAME_CAMELIZED}Actions.fetch${ACTION_NAME_CAPITALIZED}Success(${ACTION_NAME_CAMELIZED}),
     )
 
     // Then the reduced state should equal the expected state.
@@ -74,7 +74,7 @@ describe('${ACTION_NAME_CAPITALIZED} reducer', () => {
     // ... When the reducer is called with the FETCH_${ACTION_NAME_UPPERCASE}_FAILURE action...
     const result = reducer(
       state,
-      ${ACTION_IMPORT_NAME}.fetch${ACTION_NAME_CAPITALIZED}Failure(error),
+      ${ACTION_NAME_CAMELIZED}Actions.fetch${ACTION_NAME_CAPITALIZED}Failure(error),
     )
 
     // Then the reduced state should equal the expected state.
