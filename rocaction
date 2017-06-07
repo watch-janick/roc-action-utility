@@ -59,16 +59,15 @@ if (action && action.charAt(0).isLowerCase()) {
   action = action.toCapitalize();
 }
 
-if (!state && !action) {
+if (version) {
+  console.log('1.1.2');
+  process.exit(0);
+} else if (!state && !action) {
   console.log('roc-action-utility needs at least either the --state (-s) argument or the --action (-a) argument, -h for more informations.');
   process.exit(1);
 } else if (state && action) {
   console.log(`You can't mix --state and --action.`);
   process.exit(1);
-}
-
-if (version) {
-  return (console.log('1.1.1'));
 }
 
 if (action) {
