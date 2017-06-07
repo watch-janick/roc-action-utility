@@ -9,10 +9,10 @@ export const ${ACTION_NAME_CAMELIZED}Actions = {
   },
 
   FETCH_${ACTION_NAME_UPPERCASE}_SUCCESS: '${ACTION_NAME_CAMELIZED}Actions/FETCH_${ACTION_NAME_UPPERCASE}_SUCCESS',
-  fetch${ACTION_NAME_CAPITALIZED}Success (response) {
+  fetch${ACTION_NAME_CAPITALIZED}Success (${ACTION_NAME_CAMELIZED}) {
     return {
       type: ${ACTION_NAME_CAMELIZED}Actions.FETCH_${ACTION_NAME_UPPERCASE}_SUCCESS,
-      response,
+      ${ACTION_NAME_CAMELIZED},
     }
   },
 
